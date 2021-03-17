@@ -1,5 +1,8 @@
 package com.zhh.practice.juc;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @description: 问题：三个售票员  卖出30张票 （线程操作资源类）
  * @see:com.zhh.practice.juc
@@ -17,7 +20,7 @@ public class SaleTicket {
             @Override
             public void run() {
                 for(int i = 0; i <= 40; i++){
-                    ticket.saleTicket();
+                    ticket.saleTicket1();
                     //Thread.sleep(500);
                 }
             }
@@ -27,7 +30,7 @@ public class SaleTicket {
             @Override
             public void run() {
                 for(int i = 0; i <= 40; i++){
-                    ticket.saleTicket();
+                    ticket.saleTicket1();
                 }
             }
         },"B").start();
@@ -36,10 +39,11 @@ public class SaleTicket {
             @Override
             public void run() {
                 for(int i = 0; i <= 40; i++){
-                    ticket.saleTicket();
+                    ticket.saleTicket1();
                 }
             }
         },"C").start();
+
     }
 }
 
@@ -47,11 +51,28 @@ public class SaleTicket {
 class Ticket{
 
     private int ticketNum = 30;
+    Lock lock = new ReentrantLock();
 
     public synchronized void saleTicket(){
         if(ticketNum > 0){
             ticketNum--;
             System.out.println(Thread.currentThread().getName()+"卖出了，剩余票数为"+ticketNum);
         }
+    }
+
+    public void saleTicket1(){
+
+        lock.lock();
+        try{
+            if(ticketNum > 0){
+                System.out.println(Thread.currentThread().getName()+"卖出了，剩余票数为"+(--ticketNum));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
+        }
+
+
     }
 }
