@@ -44,6 +44,12 @@ public class SaleTicket {
             }
         },"C").start();
 
+        //改写为lambda表达式
+        new Thread(()->{
+            for(int i = 0; i <= 40; i++){
+                ticket.saleTicket1();
+            }
+        },"D").start();
     }
 }
 
@@ -61,7 +67,6 @@ class Ticket{
     }
 
     public void saleTicket1(){
-
         lock.lock();
         try{
             if(ticketNum > 0){
