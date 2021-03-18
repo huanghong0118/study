@@ -1,5 +1,9 @@
 package com.zhh.practice.juc;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @description:生产者消费者问题 两个线程分别加一和减一
  * @see:com.zhh.practice.juc
@@ -10,7 +14,7 @@ package com.zhh.practice.juc;
 public class ThreadWaiNotifyDemo {
 
     public static void main(String[] args) {
-        AirConditioner airConditioner = new AirConditioner();
+        AirConditioner1 airConditioner = new AirConditioner1();
         new Thread(()->{
             for(int i = 0; i < 10;i++){
                 try {
@@ -54,5 +58,46 @@ class AirConditioner{
         temperature--;
         System.out.println(Thread.currentThread().getName()+"操作当前温度为:"+temperature);
         this.notifyAll();
+    }
+}
+
+//改写资源类
+class AirConditioner1{
+    private int temperature = 0;
+
+    Lock lock = new ReentrantLock();
+    Condition condition = lock.newCondition();
+
+    public void increament() throws InterruptedException {
+        lock.lock();
+        try {
+            while(temperature == 0){
+                condition.await();
+            }
+            System.out.println(Thread.currentThread().getName()+"操作当前温度为:"+(++temperature));
+            condition.signalAll();
+
+        }catch (Exception e){
+
+        }finally {
+            lock.unlock();
+        }
+
+    }
+
+    public void decreament() throws InterruptedException {
+        lock.lock();
+        try {
+            while(temperature != 0){
+                condition.await();
+            }
+            System.out.println(Thread.currentThread().getName()+"操作当前温度为:"+(--temperature));
+            condition.signalAll();
+
+        }catch (Exception e){
+
+        }finally {
+            lock.unlock();
+        }
     }
 }
