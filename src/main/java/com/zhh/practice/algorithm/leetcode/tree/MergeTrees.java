@@ -1,8 +1,4 @@
-package com.zhh.practice.algorithm.leetcode;
-
-
-// Definition for a binary tree node.
-
+package com.zhh.practice.algorithm.leetcode.tree;
 
 
 /**
@@ -30,15 +26,3 @@ public class MergeTrees {
     }
 }
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
