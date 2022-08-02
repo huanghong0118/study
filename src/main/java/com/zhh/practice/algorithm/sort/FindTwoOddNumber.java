@@ -25,6 +25,7 @@ public class FindTwoOddNumber {
         //结果
         int a = onlyOne;
         int b = eor ^ onlyOne;
+        System.out.println(a + " "+b);
     }
 
     public static void main(String[] args) {
