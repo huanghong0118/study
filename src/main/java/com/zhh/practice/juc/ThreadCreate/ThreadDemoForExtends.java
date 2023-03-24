@@ -1,4 +1,4 @@
-package com.zhh.practice.ThreadCreate;
+package com.zhh.practice.juc.ThreadCreate;
 
 /**
  * @description:通过继承方式创建线程

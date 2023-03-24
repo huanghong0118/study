@@ -1,4 +1,4 @@
-package com.zhh.practice.ThreadCreate;
+package com.zhh.practice.juc.ThreadCreate;
 
 import java.util.concurrent.*;
 
